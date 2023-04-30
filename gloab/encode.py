@@ -18,7 +18,7 @@ class Laplacian:
             atoms (ase.Atoms | str): ase.Atoms obj of molecule or path to geometry file
             basis (str): the type of laplacian that should be considered
                          'adjacency' - standard adjacency connectivity matrix
-                         'distances' - inverse distance matrix w/ arb. cutoff
+                         'distances' - distance matrix w/ arb. cutoff
             
             cutoff (float): length in Angstroms below which pairwise distances are retained,
                             if 'None', then all pairwise distances are considered
@@ -140,9 +140,10 @@ class Laplacian:
         """ creates degree vector that represents the system given by self.atoms
 
         ~returns~
-        np.ndarrray: natom array with entries corresponding to atoms numbers in self.atoms
-                     each entry is the number of neighbors the specific atom has, according
-                     to the overlapping radii (either gloab.utils.default_radii or supplied float)
+        np.ndarrray: natom array with entries corresponding to number of neighbors for each atom
+                     N.B. - this matrix is based off of the radii supplied in 
+                     the initial object generation (e.g. default in gloab.utils or 
+                     single float supplied when calling gloab.encode.Laplacian)
         """
     
         adj_mat = self.adjacency
@@ -195,7 +196,8 @@ class Laplacian:
 
         distances = get_distances(self.atoms.positions)[1]
         
-        np.multiply
+        if self.cutoff is not None:
+            distances[distances > self.cutoff] = 0
 
         return distances
 
@@ -220,7 +222,7 @@ class Laplacian:
 
         elif self.basis == 'distances':
 
-            dis_mat = self.distances
+            dis_mat = np.multiply(self.distances, self.adjacency)
             
             # create degree vector for diagonal
             deg_vec = []
