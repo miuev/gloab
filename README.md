@@ -29,11 +29,15 @@ As shown through the assignment of `gc`, connectivity properties are called as p
 The first relevant flag is `basis`, which can be used to select either neighbor-based matrices or distance-based matrices as the basis for calculations.
 These are respectively selected by using ```basis = adjacency``` or ```basis = distances```.
 
-The second flag is `normalize`, which takes a Boolean argument.
+The second flag is `cutoff`, which is the limit at which inter-atomic distances will be considered in a distance matrix
+Above `cutoff`, atoms will be assigned distances of 0.
+This flag has no use for a basis of `adjacency`.
+
+The third flag is `normalize`, which takes a Boolean argument.
 If `True`, the generated Laplacian matrix is the symmetric normalized Laplacian.
 If `False`, it is instead an unnormalized Laplacian.
 
-The third flag is `radii`, which is used to control atomic radii assignments.
+The fourth flag is `radii`, which is used to control atomic radii assignments.
 When using `adjacency` as a basis, `gloab` labels atom neighbors based on overlapping atomic radii.
 These can be a default set of atomic radii (as shipped with `ASE`), or can be customized.
 A slightly customized set of radii are used as the default in this repository, as described in a recent publication from our group **cite**.
