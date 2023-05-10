@@ -25,8 +25,33 @@ In this example, a global connectivity value that corresponds to `atoms` is assi
 `system` is an instance that can be used to generate various connectivity properties which are representative of `atoms`.
 As shown through the assignment of `gc`, connectivity properties are called as properties of the `system` instance.
 
-`gloab` assigns atom neighbors based on overlapping atomic radii.
+`Laplacian` can be called with additional flags that change underlying behavior.
+The first relevant flag is `basis`, which can be used to select either neighbor-based matrices or distance-based matrices as the basis for calculations.
+These are respectively selected by using ```basis = adjacency``` or ```basis = distances```.
+
+The second flag is `normalize`, which takes a Boolean argument.
+If `True`, the generated Laplacian matrix is the symmetric normalized Laplacian.
+If `False`, it is instead an unnormalized Laplacian.
+
+The third flag is `radii`, which is used to control atomic radii assignments.
+When using `adjacency` as a basis, `gloab` labels atom neighbors based on overlapping atomic radii.
 These can be a default set of atomic radii (as shipped with `ASE`), or can be customized.
 A slightly customized set of radii are used as the default in this repository, as described in a recent publication from our group **cite**.
-Alternatively, a single universal radius can be used for all elements by supplying the `radii` flag when instantiating a new `Laplacian`.
+Alternatively, a single universal radius can be used for all elements by supplying a single float to the `radii` flag when instantiating a new `Laplacian`.
+If `radii` is `None`, then the default radii will be used.
 
+Once instantiated, the Laplacian can be probed for the different properties summarized here:
+
+| Property | Name |
+| - | - |
+| adjacency matrix | `adjacency` |
+| degree matrix | `degree` |
+| laplacian matrix | `laplacian` |
+| distance matrix | `distances` |
+| eigenvalue spectrum | `eig` | 
+| eigenfunctions | `vec` |
+| spectral gap | `gap` |
+| algebraic connectivity | `algebraic_connectivity` |
+| Laplacian energy like invariant | `lel` |
+| global connectivity | `global_connectivity`|
+| unscaled connectivity | `us_connectivity` |
