@@ -7,7 +7,7 @@ setuptools.setup(
     name="gloab",
     version="0.0.1",
     author="Evan Miu",
-    author_email="evm@pitt.edu",
+    author_email="evm24@pitt.edu",
     description="generate and analyze graph laplacians from atoms and their bonds",
     long_description=long_description,
     long_description_content_type="text/markdown",
